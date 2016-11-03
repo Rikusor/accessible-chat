@@ -1,0 +1,183 @@
+/* Fix user-agent */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+html, input {
+  font-family:
+    "HelveticaNeue-Light",
+    "Helvetica Neue Light",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    "Lucida Grande",
+    sans-serif;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+ul {
+  list-style: none;
+  word-wrap: break-word;
+}
+
+
+/* Common styles */
+.is-vishidden {
+  position: absolute;
+  left: -9999em;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+.align-center {
+  text-align: center;
+}
+
+.cf:before,
+.cf:after {
+    content: "";
+    display: table;
+} 
+
+.cf:after {
+    clear: both;
+}
+
+/* IE 6 & 7 */
+.cf {
+    zoom: 1;
+}
+
+/* Pages */
+
+.pages {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.page {
+  height: 90%;
+  position: absolute;
+  width: 100%;
+}
+
+/* Login Page */
+
+.login.page {
+  background-color: #000;
+}
+
+.login.page .form {
+  height: 100px;
+  margin-top: -100px;
+  position: absolute;
+
+  text-align: center;
+  top: 50%;
+  width: 100%;
+}
+
+.login.page .form .username-input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #fff;
+  outline: none;
+  padding-bottom: 15px;
+  text-align: center;
+  width: 400px;
+}
+
+.login.page .title {
+  font-size: 200%;
+}
+
+.login.page .username-input {
+  font-size: 200%;
+  letter-spacing: 3px;
+}
+
+.login.page .title, .login.page .username-input {
+  color: #fff;
+  font-weight: 100;
+}
+
+/* Chat page */
+
+.chat.page {
+  display: none;
+}
+
+.username {
+  margin-right: 0.5em;
+}
+/* Font */
+
+.messages {
+  font-size: 150%;
+}
+
+.log {
+  color: gray;
+  font-size: 70%;
+  margin: 5px;
+  text-align: center;
+}
+
+/* Messages */
+
+#chat-history {
+  height: 100%;
+  padding-bottom: 12em;
+  overflow:scroll;
+}
+
+.message.typing .message-body {
+  color: gray;
+}
+
+/* Message input */
+#message-input-wrapper {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
+
+#message-input {
+  float: left;
+  width: 80%;
+  height: 4em;
+  padding-left: 0.5em;
+  font-size: 100%;
+}
+#message-submit {
+  font-size: 100%;
+  float: left;
+  width: 20%;
+  height:4em;
+  border:none;
+  color:#fff;
+  background:#0d1973;
+}
+#message-submit:focus, #message-submit:hover {
+  background:#afafaf;
+  cursor: pointer;
+}
