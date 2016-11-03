@@ -70,7 +70,7 @@ $(function() {
 
   // Log a message
   function log (message, options) {
-    var $el = $('<li>').addClass('log').text(message);
+    var $el = $('<li aria-live="polite">').addClass('log').text(message);
     addMessageElement($el, options);
   }
 
@@ -80,6 +80,7 @@ $(function() {
     // Don't fade the message in if there is an 'X was typing'
     var $typingMessages = getTypingMessages(data);
     options = options || {};
+
     if ($typingMessages.length !== 0) {
       options.fade = false;
       $typingMessages.remove();
@@ -100,27 +101,27 @@ $(function() {
     var $screenReader = $('<span class="is-vishidden">'+data.username+' at '+displayedTime+': ' + data.message + '</span>')
 
     var typingClass = data.typing ? 'typing' : '';
-    var $messageDiv = $('<li aria-live="polite" class="message"/>')
+
+    var ariaLive = 'polite';
+    if( data.username === username ) {
+      ariaLive = 'off';
+
+      $('#screen-reader-events').text('Message sent!');
+
+      resetScreenReaderEvent();
+    }
+
+    var $messageDiv = $('<li aria-live="' + ariaLive + '" class="message"/>')
       .data('username', data.username)
       .addClass(typingClass)
-      .append($screenReader, $usernameDiv, $messageBodyDiv);
+      .append($usernameDiv, $messageBodyDiv);
 
     addMessageElement($messageDiv, options);
 
-  }
+    setTimeout(function() {
+      $messageDiv.append($screenReader);
+    }, 250);
 
-  // Adds the visual chat typing message
-  function addChatTyping (data) {
-    data.typing = true;
-    data.message = 'is typing';
-    addChatMessage(data);
-  }
-
-  // Removes the visual chat typing message
-  function removeChatTyping (data) {
-    getTypingMessages(data).fadeOut(function () {
-      $(this).remove();
-    });
   }
 
   // Adds a message element to the messages and scrolls to the bottom
@@ -276,16 +277,6 @@ $(function() {
   // Whenever the server emits 'user left', log it in the chat body
   socket.on('user left', function (data) {
     log(data.username + ' left');
-    removeChatTyping(data);
   });
 
-  // Whenever the server emits 'typing', show the typing message
-  socket.on('typing', function (data) {
-    addChatTyping(data);
-  });
-
-  // Whenever the server emits 'stop typing', kill the typing message
-  socket.on('stop typing', function (data) {
-    removeChatTyping(data);
-  });
 });
