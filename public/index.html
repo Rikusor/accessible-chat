@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Accessible chat example</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 class="align-center">Accessible chat</h1>
+  <ul class="pages">
+    <li class="chat page">
+      <p tabindex="0" class="align-center" id="welcome-message"><span class="is-vishidden">You've successfully joined the chat.</span><span id="participant-amount"></span></p>
+      <div id="chat-history" aria-label="Chat history">
+        <ul class="messages">
+          
+        </ul>
+      </div>
+      <div id="message-input-wrapper">
+        <form id="message-input-form" class="cf">
+          <label for="message-input" class="is-vishidden">Message input for accessible chat</label>
+          <input id="message-input" class="input-message" placeholder="Type here..."/>
+          <button id="message-submit" type="submit">Send</button>
+        </form>
+      </div>
+    </li>
+    <li class="login page">
+      <div id="login-form" class="form">
+        <h2 class="title">What's your nickname?</h2>
+        <label for="nickname" class="is-vishidden">Nickname</label>
+        <input id="nickname" name="nickname" required aria-required="true" class="username-input" type="text" maxlength="14" />
+        <button type="submit" class="is-vishidden">Join chat</button>
+      </div>
+    </li>
+  </ul>
+  
+  <p id="screen-reader-events" class="is-vishidden" aria-live="assertive"></p>
+  <script src="/jquery.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/main.js"></script>
+</body>
+</html>
