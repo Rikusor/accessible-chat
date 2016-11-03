@@ -1,13 +1,20 @@
 {
-  "name": "socket.io-chat",
-  "version": "0.0.0",
-  "description": "A simple chat client using socket.io",
+  "name": "Accessible-chat",
+  "version": "0.0.1",
+  "description": "Example of accessible chat for visually impared users",
   "main": "index.js",
-  "author": "Grant Timmerman",
-  "private": true,
-  "license": "BSD",
+  "author": "Riku Eteläniemi",
+  "private": false,
+  "license": "MIT",
   "dependencies": {
     "express": "4.13.4",
     "socket.io": "1.2.0"
+  },
+  "scripts": {
+    "postinstall": "chmod 775 index.js && chmod -R 775 public/",
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=6.2.0"
   }
 }
