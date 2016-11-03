@@ -25,7 +25,6 @@ $(function() {
   var lastTypingTime;
   var $currentInput = $usernameInput.focus();
 
-
   var socket = io();
 
   // Sets the client's username
@@ -39,7 +38,17 @@ $(function() {
       $loginPage.off('click');
       // Tell the server your username
       socket.emit('add user', username);
+    } else {
+      $('#screen-reader-events').text('Invalid user name, joining failed.');
+      resetScreenReaderEvent();
     }
+  }
+
+  function resetScreenReaderEvent() {
+    // Reset text after screenreaders noticed assertive new text (They will read the text until end)
+    setTimeout(function resetEvent(){
+      $('#screen-reader-events').text('');
+    }, 250);
   }
 
   // Sends a chat message
@@ -67,6 +76,7 @@ $(function() {
 
   // Adds the visual chat message to the message list
   function addChatMessage (data, options) {
+
     // Don't fade the message in if there is an 'X was typing'
     var $typingMessages = getTypingMessages(data);
     options = options || {};
