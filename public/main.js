@@ -21,7 +21,6 @@ $(function() {
   var username;
   var connected = false;
   var typing = false;
-  var botEnabled = false;
   var lastTypingTime;
   var $currentInput = $usernameInput.focus();
 
@@ -92,13 +91,13 @@ $(function() {
     var $usernameDiv = $('<span>').attr({
       'aria-hidden': 'true',
       class: 'username'
-    }).html(data.username +' <time datetime="'+displayedTime+'">' + displayedTime + '</time>:')
+    }).html(data.username + ':')
       .css('color', getUsernameColor(data.username));
 
     var $messageBodyDiv = $('<span aria-hidden="true" class="message-body">')
       .text(data.message);
 
-    var $screenReader = $('<span class="is-vishidden">'+data.username+' at '+displayedTime+': ' + data.message + '</span>')
+    var $screenReader = $('<span class="is-vishidden">'+data.username+': ' + data.message + '</span>')
 
     var typingClass = data.typing ? 'typing' : '';
 
@@ -251,10 +250,8 @@ $(function() {
 
     if (data.numUsers === 1) {
       message += "You're the only participant. You will be receiving messages from a bot for demoing purposes.";
-      botEnabled = true;
     } else {
       message += "There are " + data.numUsers + " participants. Occasionally a bot will send messages to chat, for demoing purposes.";
-      botEnabled = false;
     }
 
     $('#participant-amount').text(message);
@@ -266,6 +263,7 @@ $(function() {
 
   // Whenever the server emits 'new message', update the chat body
   socket.on('new message', function (data) {
+    console.log("wtf")
     addChatMessage(data);
   });
 

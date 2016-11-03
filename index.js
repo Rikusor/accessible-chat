@@ -9,14 +9,67 @@ server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 
+
+var sentences = [
+  'Accessibility is not a barrier to innovation.',
+  'Don’t use color as the only visual means of conveying information.',
+  'Ensure sufficient contrast between text and its background.',
+  'Provide visual focus indication for keyboard focus.',
+  'Be careful with forms.',
+  'Don’t make people hover to find things.',
+  'Provide informative, unique page titles',
+  'Use headings to convey meaning and structure',
+  'Make link text meaningful',
+  'Keep content clear and concise',
+  'Write alternative text that provides the information or function of the image',
+  'Choose a content management system that supports accessibility',
+  'Use headings correctly to organize the structure of your content',
+  'Design your forms for accessibility',
+  'Use tables for tabular data, not for layout',
+  'Ensure that all content can be accessed with the keyboard alone in a logical way',
+  'Use ARIA roles and landmarks',
+  'Make dynamic content accessible',
+  'Screen reader users can use heading structure to navigate content.'
+],
+
+//the number of sentences in the array
+maxSentences = sentences.length;
+
+//get and return a random sentences from array
+function getRandomSentence() {
+    //calculate a random index
+    var index = Math.floor(Math.random() * (maxSentences - 1));
+    //return the random sentence
+    return sentences[index];
+}
+
 // Routing
 app.use(express.static(__dirname + '/public'));
 
 // Chatroom
-
+var botInterval;
 var numUsers = 0;
+var connections = 0;
 
 io.on('connection', function (socket) {
+
+
+  if(connections === 0) {
+    
+    connections++;
+
+    botInterval = setInterval(function sendBotMessage() {
+      var botMessage = getRandomSentence();
+
+      socket.broadcast.emit('new message', {
+        username: 'Chat bot',
+        message: botMessage
+      });
+    }, 10000);
+
+  }
+
+
   var addedUser = false;
 
   // when the client emits 'new message', this listens and executes
@@ -44,20 +97,8 @@ io.on('connection', function (socket) {
       username: socket.username,
       numUsers: numUsers
     });
-  });
 
-  // when the client emits 'typing', we broadcast it to others
-  socket.on('typing', function () {
-    socket.broadcast.emit('typing', {
-      username: socket.username
-    });
-  });
 
-  // when the client emits 'stop typing', we broadcast it to others
-  socket.on('stop typing', function () {
-    socket.broadcast.emit('stop typing', {
-      username: socket.username
-    });
   });
 
   // when the user disconnects.. perform this
@@ -72,4 +113,6 @@ io.on('connection', function (socket) {
       });
     }
   });
+
 });
+
