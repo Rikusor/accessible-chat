@@ -103,13 +103,12 @@ $(function() {
 
     var ariaLive = 'polite';
     if( data.username === username ) {
+
       ariaLive = 'off';
-
       $('#screen-reader-events').text('Message sent!');
-
       resetScreenReaderEvent();
-    }
 
+    }
     var $messageDiv = $('<li aria-live="' + ariaLive + '" class="message"/>')
       .data('username', data.username)
       .addClass(typingClass)
@@ -263,7 +262,6 @@ $(function() {
 
   // Whenever the server emits 'new message', update the chat body
   socket.on('new message', function (data) {
-    console.log("wtf")
     addChatMessage(data);
   });
 
